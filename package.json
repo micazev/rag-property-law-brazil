@@ -1,0 +1,10 @@
+{
+  "name": "rag-property-law-brazil",
+  "private": true,
+  "packageManager": "pnpm@10.12.4",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "verify": "pnpm -r verify",
+    "test": "pnpm -r test"
+  }
+}
