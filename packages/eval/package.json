@@ -1,0 +1,26 @@
+{
+  "name": "@rag-property-law-brazil/eval",
+  "version": "0.1.0",
+  "description": "Retrieval evaluation over the Brazilian property-law corpus: golden questions, retrievers, chunking strategies, recall@k / MRR / nDCG.",
+  "license": "MIT",
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": { ".": "./src/index.ts" },
+  "scripts": {
+    "eval": "tsx src/run.ts",
+    "test": "vitest run",
+    "verify": "tsc --noEmit -p tsconfig.json && vitest run"
+  },
+  "dependencies": {
+    "@rag-property-law-brazil/corpus": "workspace:*",
+    "@rag-property-law-brazil/lei-chunker": "workspace:*",
+    "snowball-stemmers": "0.6.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsx": "^4.20.0",
+    "typescript": "5.9.3",
+    "vitest": "^4.1.6"
+  }
+}

@@ -17,7 +17,8 @@ published package by package.
 | `lex-retrieval` | Hybrid retrieval: exact article reference + Portuguese full-text search + pgvector, fused with Reciprocal Rank Fusion | planned |
 | `answer` | Grounded answers with `[n]` citations and two refusal gates (similarity before the model, citation validation after) | planned |
 | `matricula-parser` | Segments a registry certificate into one chunk per act (R-n / AV-n) | planned |
-| `eval` | Golden question set with retrieval (recall@k, MRR) and refusal metrics | planned |
+| [`corpus`](packages/corpus) | The norms, the slice of each that is kept, and a fetcher for the Planalto compiled texts | ✅ code; texts not fetched yet |
+| [`eval`](packages/eval) | Golden questions, retrievers (exact, BM25, vector, hybrid), chunking baselines, recall@k / MRR / nDCG | ✅ harness; golden set empty |
 | `mcp-server` | MCP tools over the corpus (`buscar_lei`, `obter_artigo`) | planned |
 
 ## `lei-chunker`
@@ -62,6 +63,31 @@ for (const c of chunks) {
   const toEmbed = embedTextFor('Código Civil', c);
 }
 ```
+
+## Evaluation
+
+The harness compares retrievers and chunking strategies on the same golden
+set, with the **article** as the unit of relevance: a gold article counts as
+found at the rank of the first retrieved chunk that covers it. Fixed-size
+windows are cut over the same filtered text as the article chunks and record
+every article they overlap, so both strategies are scored on which articles
+reach the top k. `Chars@k` reports how much text that costs.
+
+| Retriever | What it is |
+|---|---|
+| `exact` | Article references parsed from the question, looked up by label (restricted to the norms the question names) |
+| `lexical` | BM25 over Portuguese Snowball stems. An in-memory stand-in: production ranks with Postgres `ts_rank_cd`, which uses the same stemmer but scores proximity instead of IDF |
+| `vector` | Cosine over `gemini-embedding-001` (768 dims), embeddings cached on disk |
+| `exact+lexical` | RRF over lexical, exact hits ranked first |
+| `hybrid` | The production rule: exact first, then RRF (k = 60) over lexical and vector |
+
+```bash
+pnpm --filter @rag-property-law-brazil/corpus fetch      # download the texts from planalto.gov.br
+pnpm --filter @rag-property-law-brazil/eval eval         # exact, lexical, exact+lexical
+GEMINI_API_KEY=… pnpm --filter @rag-property-law-brazil/eval eval   # + vector, hybrid
+```
+
+Results: _pending — the corpus texts and the golden set are the next commit._
 
 ## Development
 

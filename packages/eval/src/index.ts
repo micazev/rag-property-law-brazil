@@ -1,0 +1,10 @@
+export * from './types';
+export { parseGold, missingGold } from './gold';
+export { firstRanks, recallAt, reciprocalRank, ndcgAt, mean } from './metrics';
+export { applyStrategy, parseStrategy, strategyName, windowChunks, type ChunkingStrategy } from './chunking';
+export { evaluate, toMarkdown, byTypeMarkdown, isAnswerable, type RunResult, type QuestionResult, type Aggregate } from './evaluate';
+export { exactRetriever, parseQuery, type AliasEntry, type ParsedQuery } from './retrievers/exact';
+export { lexicalRetriever, tokenize, type Bm25Options } from './retrievers/lexical';
+export { vectorRetriever, cachedEmbedder, cosine, type Embedder, type EmbedTask } from './retrievers/vector';
+export { hybridRetriever, fuseRrf, type HybridOptions } from './retrievers/hybrid';
+export { geminiEmbedder } from './embedders/gemini';
