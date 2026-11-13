@@ -1,7 +1,7 @@
 name: ci
 on:
   push:
-    branches: [main]
+    branches: [claude/rag-portfolio-strategy-209r8g, main]
   pull_request:
 jobs:
   verify:
