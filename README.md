@@ -1,5 +1,7 @@
 # rag-property-law-brazil
 
+[![ci](https://github.com/micazev/rag-property-law-brazil/actions/workflows/ci.yml/badge.svg)](https://github.com/micazev/rag-property-law-brazil/actions/workflows/ci.yml)
+
 Retrieval-augmented generation over Brazilian property and registry law
 (*direito imobiliário e registral*): structure-aware chunking of statutes,
 hybrid retrieval, cited answers that refuse when the sources do not support
